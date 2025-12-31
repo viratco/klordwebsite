@@ -43,14 +43,18 @@ const AddPropertyPage = () => {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`
-                    // Content-Type is set automatically by browser with boundary
                 },
                 body: formData,
             });
 
             if (response.ok) {
                 alert('Property added successfully!');
-                setFormData({ title: '', location: '', price: '', description: '', type: 'Villa', status: 'For Sale' });
+                // Reset form
+                setTitle('');
+                setLocation('');
+                setDescription('');
+                setType('Villa');
+                setStatus('For Sale');
                 setFiles([]);
                 setPreviews([]);
             } else {
@@ -72,7 +76,6 @@ const AddPropertyPage = () => {
             <div className="glass-card" style={{ padding: '2.5rem' }}>
                 <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '2rem' }}>
 
-                    {/* Media Upload Section */}
                     {/* Media Upload Section */}
                     <div className="media-upload" style={{
                         border: '2px dashed var(--color-border)',
@@ -118,18 +121,16 @@ const AddPropertyPage = () => {
                         <label style={{ display: 'block', marginBottom: '0.75rem', color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>Property Title</label>
                         <input
                             name="title"
-                            value={formData.title}
-                            onChange={handleChange}
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
                             placeholder="Ex: Ethereal Heights"
                             style={{ fontSize: '1.1rem' }}
                         />
                     </div>
 
-
-
                     <div className="form-group">
                         <label style={{ display: 'block', marginBottom: '0.75rem', color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>Type</label>
-                        <select name="type" value={formData.type} onChange={handleChange}>
+                        <select name="type" value={type} onChange={(e) => setType(e.target.value)}>
                             <option value="Villa">Villa</option>
                             <option value="Mansion">Mansion</option>
                             <option value="Penthouse">Penthouse</option>
@@ -139,15 +140,15 @@ const AddPropertyPage = () => {
 
                     <div className="form-group">
                         <label style={{ display: 'block', marginBottom: '0.75rem', color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>Location</label>
-                        <input name="location" value={formData.location} onChange={handleChange} placeholder="Ex: Beverly Hills, CA" />
+                        <input name="location" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Ex: Beverly Hills, CA" />
                     </div>
 
                     <div className="form-group">
                         <label style={{ display: 'block', marginBottom: '0.5rem', color: '#888' }}>Description & Info</label>
                         <textarea
                             name="description"
-                            value={formData.description}
-                            onChange={handleChange}
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
                             rows={5}
                             placeholder="Describe the property details, amenities, and unique features..."
                         />
