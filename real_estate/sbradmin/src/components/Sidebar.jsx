@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FaHome, FaPlus, FaUsers, FaSignOutAlt, FaBuilding } from 'react-icons/fa';
+import { FaHome, FaPlus, FaUsers, FaSignOutAlt, FaBuilding, FaCloudUploadAlt } from 'react-icons/fa';
 import './Sidebar.css';
 
 import logo from '../assets/logo.png';
@@ -34,6 +34,11 @@ const Sidebar = () => {
                 <NavLink to="/leads" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
                     <FaUsers />
                     <span>Leads</span>
+                </NavLink>
+
+                <NavLink to="/blog" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
+                    <FaCloudUploadAlt /> {/* Reusing icon or changing to better one */}
+                    <span>Blog</span>
                 </NavLink>
             </nav>
 

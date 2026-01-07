@@ -3,6 +3,7 @@ import DashboardLayout from './layouts/DashboardLayout';
 import LoginPage from './pages/LoginPage';
 import AddPropertyPage from './pages/AddPropertyPage';
 import LeadsPage from './pages/LeadsPage';
+import BlogManagementPage from './pages/BlogManagementPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route index element={<Navigate to="/add-property" replace />} /> {/* Default to Add Property for now */}
           <Route path="add-property" element={<AddPropertyPage />} />
           <Route path="leads" element={<LeadsPage />} />
+          <Route path="blog" element={<BlogManagementPage />} />
         </Route>
       </Routes>
     </Router>

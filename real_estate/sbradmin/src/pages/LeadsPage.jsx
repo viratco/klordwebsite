@@ -29,14 +29,6 @@ const LeadsPage = () => {
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
     const recentLeads = leads.filter(l => new Date(l.createdAt) > oneWeekAgo).length;
 
-    // Calculate most popular interest
-    const interests = leads.reduce((acc, curr) => {
-        const interest = curr.interestedIn || 'General';
-        acc[interest] = (acc[interest] || 0) + 1;
-        return acc;
-    }, {});
-    const topInterest = Object.keys(interests).sort((a, b) => interests[b] - interests[a])[0] || 'N/A';
-
     const StatsCard = ({ title, value, subtitle }) => (
         <div className="glass-card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <span style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '1px' }}>{title}</span>
@@ -61,7 +53,6 @@ const LeadsPage = () => {
             }}>
                 <StatsCard title="Total Leads" value={totalLeads} subtitle="All time inquiries" />
                 <StatsCard title="New (7 Days)" value={recentLeads} subtitle={`${recentLeads > 0 ? '+' : ''}${recentLeads} this week`} />
-                <StatsCard title="Top Interest" value={topInterest} subtitle="Most requested category" />
             </div>
 
             <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
@@ -69,9 +60,7 @@ const LeadsPage = () => {
                     <thead>
                         <tr style={{ borderBottom: '1px solid var(--color-border)', backgroundColor: 'rgba(255,255,255,0.02)' }}>
                             <th style={{ padding: '1rem', color: 'var(--color-text-muted)', fontWeight: 500 }}>Name</th>
-                            <th style={{ padding: '1rem', color: 'var(--color-text-muted)', fontWeight: 500 }}>Contact Info</th>
-                            <th style={{ padding: '1rem', color: 'var(--color-text-muted)', fontWeight: 500 }}>Occupation</th>
-                            <th style={{ padding: '1rem', color: 'var(--color-text-muted)', fontWeight: 500 }}>Interested In</th>
+                            <th style={{ padding: '1rem', color: 'var(--color-text-muted)', fontWeight: 500 }}>Phone Number</th>
                             <th style={{ padding: '1rem', color: 'var(--color-text-muted)', fontWeight: 500 }}>Date</th>
                         </tr>
                     </thead>
@@ -79,21 +68,7 @@ const LeadsPage = () => {
                         {leads.map(lead => (
                             <tr key={lead.id} style={{ borderBottom: '1px solid var(--color-border)' }}>
                                 <td style={{ padding: '1rem' }}>{lead.name}</td>
-                                <td style={{ padding: '1rem' }}>
-                                    <div style={{ fontSize: '0.9rem' }}>{lead.email}</div>
-                                    <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>{lead.phone}</div>
-                                </td>
-                                <td style={{ padding: '1rem' }}>{lead.occupation}</td>
-                                <td style={{ padding: '1rem' }}>
-                                    <span style={{
-                                        padding: '0.25rem 0.5rem',
-                                        borderRadius: '4px',
-                                        background: 'rgba(255,255,255,0.05)',
-                                        fontSize: '0.85rem'
-                                    }}>
-                                        {lead.interestedIn}
-                                    </span>
-                                </td>
+                                <td style={{ padding: '1rem' }}>{lead.phone}</td>
                                 <td style={{ padding: '1rem', color: 'var(--color-text-muted)' }}>
                                     {new Date(lead.createdAt).toLocaleDateString()}
                                 </td>

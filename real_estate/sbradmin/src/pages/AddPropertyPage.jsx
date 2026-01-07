@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaCloudUploadAlt, FaSave } from 'react-icons/fa';
 
 import config from '../config';
@@ -12,6 +12,48 @@ const AddPropertyPage = () => {
     const [status, setStatus] = useState('For Sale');
     const [files, setFiles] = useState([]); // Store actual file objects
     const [previews, setPreviews] = useState([]); // Store preview URLs
+    const [properties, setProperties] = useState([]);
+
+    // Fetch properties on mount
+    useEffect(() => {
+        fetchProperties();
+    }, []);
+
+    const fetchProperties = async () => {
+        try {
+            const response = await fetch(`${config.API_URL}/api/properties`);
+            const data = await response.json();
+            if (Array.isArray(data)) {
+                setProperties(data);
+            }
+        } catch (error) {
+            console.error('Error fetching properties:', error);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        if (!window.confirm('Are you sure you want to delete this property?')) return;
+
+        const token = localStorage.getItem('sbr_admin_token');
+        try {
+            const response = await fetch(`${config.API_URL}/api/properties/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                alert('Property deleted successfully');
+                fetchProperties(); // Refresh list
+            } else {
+                alert('Failed to delete property');
+            }
+        } catch (error) {
+            console.error('Error deleting property:', error);
+            alert('Server error');
+        }
+    };
 
     const handleFileChange = (e) => {
         if (e.target.files) {
@@ -57,6 +99,7 @@ const AddPropertyPage = () => {
                 setStatus('For Sale');
                 setFiles([]);
                 setPreviews([]);
+                fetchProperties(); // Refresh list
             } else {
                 alert('Failed to add property.');
             }
@@ -69,11 +112,12 @@ const AddPropertyPage = () => {
     return (
         <div>
             <div className="page-header" style={{ marginBottom: '2rem' }}>
-                <h1>Add New Property</h1>
-                <p style={{ color: 'var(--color-text-muted)' }}>Create a new listing for your portfolio.</p>
+                <h1>Manage Properties</h1>
+                <p style={{ color: 'var(--color-text-muted)' }}>Add new listings or manage existing ones.</p>
             </div>
 
-            <div className="glass-card" style={{ padding: '2.5rem' }}>
+            <div className="glass-card" style={{ padding: '2.5rem', marginBottom: '3rem' }}>
+                <h2 style={{ marginBottom: '1.5rem' }}>Add New Property</h2>
                 <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '2rem' }}>
 
                     {/* Media Upload Section */}
@@ -169,6 +213,55 @@ const AddPropertyPage = () => {
 
                 </form>
             </div >
+
+            {/* Existing Properties List */}
+            <div className="glass-card" style={{ padding: '2.5rem' }}>
+                <h2 style={{ marginBottom: '1.5rem' }}>Existing Properties</h2>
+                <div style={{ display: 'grid', gap: '1rem' }}>
+                    {properties.map(property => (
+                        <div key={property.id} style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            padding: '1rem',
+                            border: '1px solid var(--color-border)',
+                            borderRadius: '8px',
+                            background: 'rgba(255,255,255,0.02)'
+                        }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                {property.images && property.images[0] && (
+                                    <img src={property.images[0]} alt={property.title} style={{
+                                        width: '60px',
+                                        height: '60px',
+                                        objectFit: 'cover',
+                                        borderRadius: '4px'
+                                    }} />
+                                )}
+                                <div>
+                                    <h3 style={{ margin: 0, fontSize: '1.1rem' }}>{property.title}</h3>
+                                    <p style={{ margin: 0, color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>{property.location}</p>
+                                </div>
+                            </div>
+                            <button
+                                onClick={() => handleDelete(property.id)}
+                                style={{
+                                    background: '#ff4444',
+                                    color: 'white',
+                                    border: 'none',
+                                    padding: '0.5rem 1rem',
+                                    borderRadius: '4px',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    ))}
+                    {properties.length === 0 && (
+                        <p style={{ color: 'var(--color-text-muted)', textAlign: 'center' }}>No properties found.</p>
+                    )}
+                </div>
+            </div>
         </div >
     );
 };
