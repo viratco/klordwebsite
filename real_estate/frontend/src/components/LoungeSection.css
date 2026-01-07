@@ -1,0 +1,157 @@
+.lounge-section {
+    width: 100%;
+    padding: 4rem 0;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    /* Grid line separator */
+}
+
+.lounge-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: stretch;
+    /* Vertically stretch content to match height */
+    position: relative;
+}
+
+/* Left Side - Slanted Image */
+.lounge-left {
+    width: 50%;
+    position: relative;
+    z-index: 1;
+}
+
+.lounge-exterior-wrapper {
+    width: 100%;
+    height: 100vh;
+    /* Scaled back slightly from 120vh */
+    min-height: 700px;
+    /* The key slanted shape: More aggressive left tilt */
+    /* TL(0,0) TR(75,0) BR(100,100) BL(25,100) */
+    clip-path: polygon(0% 0%, 75% 0%, 100% 100%, 25% 100%);
+    overflow: hidden;
+    transform: translateX(-50px);
+    /* Pushed left as requested */
+}
+
+.lounge-exterior-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Right Side - Content */
+.lounge-right {
+    width: 50%;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Push content to edges */
+    position: relative;
+    z-index: 2;
+    padding-bottom: 0;
+}
+
+.lounge-description {
+    color: #ffffff;
+    font-family: var(--font-display);
+    /* Outfit - more elegant than Inter */
+    font-size: 1.5rem;
+    /* Larger for more impact */
+    font-weight: 500;
+    /* Semi-bold for better presence */
+    line-height: 1.7;
+    /* Good breathing room */
+    letter-spacing: -0.01em;
+    /* Slightly tighter for premium feel */
+    max-width: 650px;
+    margin-bottom: 2rem;
+    /* Reduced space */
+    margin-top: 4rem;
+    /* Add top spacing since we space-between */
+}
+
+.lounge-bottom-layout {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding-top: 0;
+    /* Removed padding, layout handles it */
+}
+
+.lounge-big-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    /* Responsive scaling to prevent overflow */
+    font-weight: 700;
+    line-height: 1;
+    position: relative;
+    z-index: 10;
+    /* Above image */
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    /* Reduced space between Perfect and property */
+    margin-right: -280px;
+    /* Align image starting position with 'P' of property */
+}
+
+.title-perfect {
+    color: white;
+}
+
+.title-property {
+    color: transparent;
+    -webkit-text-stroke: 1px white;
+    font-style: italic;
+    position: relative;
+    left: 40px;
+}
+
+.lounge-interior-wrapper {
+    position: relative;
+    width: 220px;
+    /* Reduced to be "a bit small" */
+    height: 220px;
+    /* Square */
+    z-index: 1;
+    /* Below text */
+    margin-left: -120px;
+    /* Pull further left to align with 'P' */
+    transform: translateX(0);
+    /* Reset transform */
+    border-radius: 4px;
+    /* Minimal rounding */
+    padding-right: 50px;
+    /* Increased padding as requested */
+    overflow: hidden;
+}
+
+.lounge-interior-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* Shows full original image without cropping */
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .lounge-container {
+        flex-direction: column;
+    }
+
+    .lounge-left,
+    .lounge-right {
+        width: 100%;
+        padding: 2rem;
+    }
+
+    .lounge-exterior-wrapper {
+        clip-path: none;
+        /* Remove slant on mobile for better fit */
+        height: 400px;
+    }
+}

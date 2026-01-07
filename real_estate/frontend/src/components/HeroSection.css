@@ -1,0 +1,194 @@
+.hero-container {
+    width: 100%;
+    /* Position relative to sit properly in flow */
+    position: relative;
+    /* Move it up slightly if needed or just let it sit below navbar */
+    margin-top: 120px;
+    /* Gap for navbar */
+    display: flex;
+    justify-content: center;
+    padding: 0 2rem;
+}
+
+.hero-image-wrapper {
+    width: 100%;
+    max-width: 98%;
+    height: 92vh;
+    /* Prominent height */
+    position: relative;
+    overflow: hidden;
+    /* Full symmetry: Curves on all sides */
+    border-radius: 40px;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: bottom;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transform: scale(1.1) translateX(-20px);
+    /* Start slightly zoomed and to the left */
+    transition: opacity 1.5s ease-in-out, transform 8s ease-out;
+    /* Pan slowly */
+    z-index: 1;
+    /* Below overlay */
+}
+
+.hero-image.active {
+    opacity: 1;
+    transform: scale(1.0) translateX(0);
+    /* Pan to center */
+    z-index: 2;
+    /* Ensure active image is on top of inactive ones, but below overlay */
+}
+
+/* Ensure overlay stays on top */
+.hero-overlay {
+    z-index: 10;
+}
+
+.hero-section {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: calc(var(--navbar-height) + 1rem);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    /* Grid line separator */
+}
+
+/* New Overlay Styles */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 5rem;
+    /* Indent text */
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent);
+    /* Overlay for readability */
+}
+
+.hero-title {
+    color: white;
+    font-size: 5rem;
+    font-weight: 600;
+    /* Outfit tends to look bold */
+    line-height: 1.1;
+    font-family: var(--font-display);
+}
+
+.highlight-text {
+    color: #E65100;
+    /* Orange matching logo */
+    position: relative;
+    display: inline-block;
+}
+
+/* Animation Keyframes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(100px);
+        /* Start much lower */
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes drawStroke {
+    from {
+        stroke-dashoffset: 200;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Animated Text Lines */
+.hero-text-line {
+    display: inline-block;
+    /* Allows transform */
+    opacity: 0;
+    /* Start hidden */
+    animation: fadeInUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    /* Ultra smooth easing */
+}
+
+.line-1 {
+    animation-delay: 0.1s;
+}
+
+.line-2 {
+    animation-delay: 0.3s;
+}
+
+.squiggle {
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+}
+
+.squiggle path {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    /* Start fully hidden */
+    animation: drawStroke 1.2s ease-out forwards;
+    animation-delay: 1.2s;
+    /* Start after text appears */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .hero-container {
+        padding: 0 1rem;
+        margin-top: 90px;
+    }
+
+    .hero-section {
+        height: auto;
+        min-height: 85vh;
+        margin-top: 1rem;
+        padding-bottom: 2rem;
+    }
+
+    .hero-image-wrapper {
+        height: 70vh;
+        border-radius: 20px;
+    }
+
+    .hero-overlay {
+        padding-left: 1.5rem;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent 60%);
+        justify-content: flex-start;
+        align-items: flex-end;
+        padding-bottom: 4rem;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        /* Fallback */
+        font-size: clamp(2.5rem, 10vw, 3.5rem);
+    }
+
+    .squiggle {
+        bottom: -10px;
+        height: 15px;
+    }
+}

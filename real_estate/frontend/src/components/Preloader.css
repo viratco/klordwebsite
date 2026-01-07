@@ -1,0 +1,114 @@
+.preloader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #0F0F0F;
+    /* Dark, premium background */
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+    /* Custom smooth ease */
+}
+
+.preloader-container.slide-up {
+    transform: translateY(-100%);
+}
+
+.preloader-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Ensures symmetry */
+    justify-content: center;
+}
+
+.preloader-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    overflow: visible;
+    /* Changed from hidden to avoid clipping larger logo if needed */
+}
+
+.preloader-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.8);
+    animation: iconReveal 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    /* Bouncy pop-in */
+    animation-delay: 0.2s;
+}
+
+.preloader-icon img {
+    width: 280px;
+    /* Increased from 150px */
+    height: auto;
+    object-fit: contain;
+}
+
+.loading-bar-container {
+    width: 300px;
+    /* Slightly wider than logo */
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin-top: 2rem;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: 0.1s;
+}
+
+.loading-bar {
+    width: 0%;
+    height: 100%;
+    background: #E65100;
+    border-radius: 2px;
+    animation: loadProgress 2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: 0.2s;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes loadProgress {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes iconReveal {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes textSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

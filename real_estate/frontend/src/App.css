@@ -1,0 +1,7 @@
+/* Your custom styles here */
+
+.main-content {
+    padding-top: 0;
+    /* Removed large offset since navbar is absolute, will handle spacing in Hero */
+    min-height: 100vh;
+}

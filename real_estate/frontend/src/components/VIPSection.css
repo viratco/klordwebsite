@@ -1,0 +1,202 @@
+.vip-section {
+    width: 100%;
+    padding: 10rem 2rem;
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    /* Prevent horizontal scroll */
+}
+
+.vip-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4rem;
+    text-align: left;
+}
+
+.vip-content {
+    flex: 0 0 600px;
+    padding-top: 2rem;
+    display: block;
+}
+
+.vip-title {
+    font-family: var(--font-display);
+    font-size: 3.25rem;
+    font-weight: 500;
+    line-height: 1.25;
+    color: white;
+    margin-bottom: 5rem;
+    letter-spacing: -0.01em;
+}
+
+.vip-stats-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 3.5rem;
+    margin-bottom: 5rem;
+}
+
+.vip-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stat-number {
+    font-family: var(--font-display);
+    font-size: 4rem;
+    font-weight: 400;
+    line-height: 1;
+    color: white;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    min-width: 120px;
+    /* Reserve space */
+    display: inline-block;
+}
+
+.stat-desc {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.5);
+    max-width: 180px;
+    line-height: 1.4;
+    font-weight: 400;
+    margin-top: 0.5rem;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 90px;
+    background: rgba(255, 255, 255, 0.15);
+    margin-top: 0.5rem;
+}
+
+.vip-buttons {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.btn-primary {
+    background: #ff6b35;
+    color: white;
+    border: none;
+    padding: 1.1rem 2.2rem;
+    border-radius: 50px;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+}
+
+.btn-outlined {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1.1rem 2.2rem;
+    border-radius: 50px;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.2s;
+}
+
+.btn-outlined:hover {
+    border-color: white;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.vip-visual {
+    flex: 1;
+    position: relative;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Removed translateX to prevent overflow */
+}
+
+.map-container {
+    width: 600px;
+    height: 500px;
+    position: relative;
+    /* Create the irregular polygon shape */
+    clip-path: polygon(20% 0%, 90% 15%, 100% 75%, 70% 100%, 0% 70%);
+    background: #1a1a1d;
+    transform: perspective(1000px) rotateY(-5deg) rotateX(5deg);
+    max-width: 100%;
+    /* Ensure responsiveness */
+}
+
+.map-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+    /* Removed invert/grayscale to show the actual map */
+}
+
+.map-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, rgba(6, 0, 16, 0.8), rgba(6, 0, 16, 0.4));
+    z-index: 1;
+}
+
+.map-path-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    transform: scale(0.8);
+    /* Keep path contained */
+}
+
+@media (max-width: 1024px) {
+    .vip-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .vip-stats-row {
+        justify-content: center;
+    }
+
+    .vip-buttons {
+        justify-content: center;
+    }
+
+    .vip-content {
+        max-width: 100%;
+    }
+
+    .vip-visual {
+        width: 100%;
+        transform: none;
+        /* Reset any transforms on mobile */
+    }
+
+    .map-container {
+        width: 100%;
+        max-width: 500px;
+        /* Limit size on mobile */
+    }
+}
